@@ -1,0 +1,11 @@
+identifier: protec3_nrf9160_ns
+name: PROTEC3-nRF9160-Non-Secure
+type: mcu
+arch: arm
+toolchain:
+  - gnuarmemb
+  - zephyr
+ram: 128
+flash: 256
+supported:
+  - i2c
