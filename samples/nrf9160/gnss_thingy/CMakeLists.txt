@@ -1,0 +1,35 @@
+#
+# Copyright (c) 2019 Nordic Semiconductor
+#
+# SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
+#
+
+cmake_minimum_required(VERSION 3.20.0)
+
+find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
+project(gnss_sample)
+
+zephyr_library_sources(src/main.c)
+
+if(CONFIG_UART_BLE)
+if(CONFIG_UART_MINIPORT)
+	add_subdirectory(src/uart)
+	include_directories(src/uart/include)
+else()
+	zephyr_library_sources(src/uart/uart_ble.c)
+endif()
+endif()
+
+if(CONFIG_TRACING_TEST)
+	zephyr_library_sources(src/uart/tracing_string_format_test.c)
+endif()
+
+zephyr_library_sources_ifdef(CONFIG_GNSS_SAMPLE_ASSISTANCE_NRF_CLOUD src/assistance.c)
+zephyr_library_sources_ifdef(CONFIG_GNSS_SAMPLE_ASSISTANCE_SUPL src/assistance_supl.c)
+zephyr_library_sources_ifdef(CONFIG_GNSS_SAMPLE_ASSISTANCE_MINIMAL src/assistance_minimal.c)
+zephyr_library_sources_ifdef(CONFIG_GNSS_SAMPLE_ASSISTANCE_MINIMAL src/mcc_location_table.c)
+
+zephyr_library_sources_ifdef(
+  CONFIG_NETWORKING
+  src/lte_link.c
+)
