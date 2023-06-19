@@ -1,0 +1,12 @@
+sample:
+  name: Button Sample
+tests:
+  sample.basic.button:
+    platform_allow: protec3_nrf9160_ns
+    platform_whitelist: protec3_nrf9160_ns
+    integration_platforms:
+      - protec3_nrf9160_ns
+    tags: button gpio
+    filter: dt_compat_enabled_with_alias("gpio-keys", "sw0")
+    depends_on: gpio
+    harness: button

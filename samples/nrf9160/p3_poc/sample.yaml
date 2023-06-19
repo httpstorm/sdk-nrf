@@ -1,0 +1,11 @@
+sample:
+  name: mqtt simple sample
+tests:
+  samples.nrf9160.mqtt_simple:
+    build_only: true
+    build_on_all: true
+    platform_allow: protec3_nrf9160_ns
+    platform_whitelist: protec3_nrf9160_ns
+    integration_platforms:
+      - protec3_nrf9160_ns
+    tags: ci_build

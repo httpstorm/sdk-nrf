@@ -1,0 +1,10 @@
+sample:
+  description: Connectivity Bridge application
+  name: Connectivity Bridge
+tests:
+  applications.connectivity_bridge:
+    build_only: true
+    platform_allow: protec3_nrf52840
+    integration_platforms:
+      - protec3_nrf52840
+    tags: ci_build
