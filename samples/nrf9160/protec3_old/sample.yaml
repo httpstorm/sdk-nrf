@@ -1,0 +1,8 @@
+sample:
+  name: HTTPS client sample
+tests:
+  test_build:
+    build_only: true
+    build_on_all: true
+    platform_whitelist: protec3_nrf9160_ns
+    tags: ci_build
