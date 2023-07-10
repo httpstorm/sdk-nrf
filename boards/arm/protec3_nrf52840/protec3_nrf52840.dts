@@ -1,0 +1,102 @@
+/*
+ * Copyright (c) 2019 Nordic Semiconductor ASA
+ *
+ * SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
+ */
+
+/dts-v1/;
+#include <nordic/nrf52840_qiaa.dtsi>
+#include "protec3_nrf52840-pinctrl.dtsi"
+
+/ {
+	model = "Protec3 NRF52840";
+	compatible = "nordic,protec3-nrf52840";
+
+	chosen {
+		zephyr,console = &uart0;
+		zephyr,flash = &flash0;
+		zephyr,sram = &sram0;
+		zephyr,uart-mcumgr = &uart0;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		nrf9160_int: nrf9160_int {
+			gpios = <&gpio0 8 (GPIO_OPEN_SOURCE | GPIO_ACTIVE_HIGH)>;
+			label = "nRF9160 Interrupt";
+		};
+	};
+
+	aliases {
+		nrf9160-int = &nrf9160_int;
+	};
+};
+
+&adc {
+	status = "okay";
+};
+
+&gpiote {
+	status = "okay";
+};
+
+&gpio0 {
+	status = "okay";
+};
+
+&gpio1 {
+	status = "okay";
+};
+
+&uart0 {
+	compatible = "nordic,nrf-uarte";
+	current-speed = <115200>;
+	status = "okay";
+	pinctrl-0 = <&uart0_default>;
+	pinctrl-1 = <&uart0_sleep>;
+	pinctrl-names = "default", "sleep";
+};
+
+&uart1 {
+	current-speed = <1000000>;
+	status = "okay";
+	pinctrl-0 = <&uart1_default>;
+	pinctrl-1 = <&uart1_sleep>;
+	pinctrl-names = "default", "sleep";
+};
+
+zephyr_udc0: &usbd {
+	status = "okay";
+};
+
+&flash0 {
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		/* The size of this partition ensures that MCUBoot can be built
+		 * with an RTT console, CDC ACM support, and w/o optimizations.
+		 */
+		boot_partition: partition@0 {
+			label = "mcuboot";
+			reg = <0x000000000 0x00012000>;
+		};
+		slot0_partition: partition@12000 {
+			label = "image-0";
+			reg = <0x00012000 0x000069000>;
+		};
+		slot1_partition: partition@7b000 {
+			label = "image-1";
+			reg = <0x0007b000 0x000069000>;
+		};
+		scratch_partition: partition@e4000 {
+			label = "image-scratch";
+			reg = <0x000e4000 0x00018000>;
+		};
+		storage_partition: partition@fc000 {
+			label = "storage";
+			reg = <0x000fc000 0x00004000>;
+		};
+	};
+};

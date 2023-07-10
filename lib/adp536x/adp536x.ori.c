@@ -151,12 +151,12 @@
 
 static const struct device *i2c_dev;
 
-int adp536x_reg_read(uint8_t reg, uint8_t *buff)
+static int adp536x_reg_read(uint8_t reg, uint8_t *buff)
 {
 	return i2c_reg_read_byte(i2c_dev, ADP536X_I2C_ADDR, reg, buff);
 }
 
-int adp536x_reg_write(uint8_t reg, uint8_t val)
+static int adp536x_reg_write(uint8_t reg, uint8_t val)
 {
 	return i2c_reg_write_byte(i2c_dev, ADP536X_I2C_ADDR, reg, val);
 }
